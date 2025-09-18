@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Entrer le code de confirmation</title>
+    <style>
+        .container {
+            width: 300px;
+            margin: auto;
+            text-align: center;
+            padding: 20px;
+        }
+        input, button {
+            width: 100%;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Code de confirmation</h2>
+        <form action="verifier_code.php" method="POST">
+            <input type="text" name="code" placeholder="Entrez le code reçu" required>
+            <button type="submit">Vérifier</button>
+        </form>
+    </div>
+</body>
+</html>

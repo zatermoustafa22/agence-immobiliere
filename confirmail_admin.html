@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirmation Email</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .confirmation-box {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            width: 300px;
+            text-align: center;
+        }
+        input[type="text"] {
+            padding: 10px;
+            width: 100%;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="confirmation-box">
+    <h2>Confirmation de l'Email</h2>
+    <p>Veuillez entrer le code de confirmation reçu par email :</p>
+    <form action="verify_code_confirmail_admin.php" method="POST">
+        <label for="code">Code de confirmation :</label>
+        <input type="text" id="code" name="code" required>
+        <button type="submit">Valider</button>
+    </form>
+    
+</div>
+
+</body>
+</html>

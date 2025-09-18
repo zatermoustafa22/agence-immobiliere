@@ -1,0 +1,72 @@
+/* styles.css */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to bottom, #99B8B4, #fcfcfc);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-image: url('4.png');
+  }
+  
+  .container {
+    text-align: center;
+    background:linear-gradient(to bottom, #fcfcfc, #6699CC);;
+    padding: 100px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .header {
+    margin-bottom: 20px;
+  }
+  
+  .logo {
+    max-width: 200px;
+    height: auto;
+    background-color:linear-gradient(to bottom, #6699CC, #fcfcfc);
+  }
+  
+  .site-name {
+    font-size: 40px;
+    color: #000000;
+    font-family: "Andale Mono", monospace;
+  }
+  
+  
+   .buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* Space between buttons */
+    margin-top: 20px;
+  }
+  
+  .btn {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    bottom: 0.4em;
+    width: 8.25em;
+    height: 2.5em;
+    background-color: #212121;
+    border-radius: 0.2em;
+    font-size: 1.5em;
+    color: #fff;
+    border: 0.08em solid #fff;
+    box-shadow: 0 0.4em 0.1em 0.019em #fff;
+  }
+  
+  .btn:hover {
+    transition: all 0.5s;
+    transform: translate(0, 0.4em);
+    box-shadow: 0 0 0 0 #fff;
+  }
+  
+  
+  .btn:not(hover) {
+    transition: all 1s;
+  }
+  

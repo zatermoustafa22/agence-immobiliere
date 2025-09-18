@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Mot de passe oublié</title>
+    <style>
+        .container {
+            width: 300px;
+            margin: auto;
+            padding: 20px;
+            text-align: center;
+        }
+        input, button {
+            width: 100%;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Mot de passe oublié</h2>
+        <p>Entrez votre email pour recevoir un code de confirmation :</p>
+        
+        <form action="envoyer_code.php" method="POST">
+            <input type="email" name="email" placeholder="Votre adresse email" required>
+            <button type="submit">Envoyer le code</button>
+        </form>
+
+        <br>
+
+        <form action="entrer_code_confirmation.html" method="get">
+            <button type="submit">J'ai déjà reçu le code</button>
+        </form>
+    </div>
+</body>
+
+</html>
