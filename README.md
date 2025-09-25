@@ -27,7 +27,7 @@ Application web d'agence immobilière permettant aux utilisateurs de consulter e
 - Déploiement : infinity free
 
 ---
-## demo : https://agence-immo.kesug.com
+## demo : https://agence-immo.kesug.com (Pour tester la démo : Nom d’utilisateur : moustafa — Mot de passe : 123)
 
 
 
