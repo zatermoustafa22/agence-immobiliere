@@ -548,7 +548,7 @@ Favoris
 
         <div class="banner">
         <h2>C'est le moment pour déposer </h2>
-        <a href="ajouter_propriete.php" class="cta-button">
+        <a href="changer_role.php" class="cta-button">
             <img src="https://cdn-icons-png.flaticon.com/512/1828/1828817.png" alt="icon"> Déposer une annonce
         </a>
     </div>
@@ -557,12 +557,10 @@ Favoris
     <div class="property-examples">
     <?php
     // Connexion à la base de données
-    $conn = new mysqli("localhost", "root", "", "immobilier");
-    if ($conn->connect_error) {
-        die("Connexion échouée : " . $conn->connect_error);
-    }
+    require_once __DIR__ . '/db.php';
+    
+    $sql = "SELECT titre, prix, image_01, description FROM propriete WHERE statut = 'acceptee' ORDER BY cree_a DESC LIMIT 3";
 
-    $sql = "SELECT titre, prix, image_01, description FROM propriete ORDER BY cree_a DESC LIMIT 3";
     $result = $conn->query($sql);
 
     if ($result && $result->num_rows > 0):

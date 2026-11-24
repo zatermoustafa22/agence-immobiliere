@@ -1,16 +1,7 @@
 <?php
 session_start();
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "immobilier";
-
-// Connexion
-$conn = new mysqli($servername, $username, $password, $dbname);
-if ($conn->connect_error) {
-    die("Échec de la connexion : " . $conn->connect_error);
-}
+require_once __DIR__ . '/db.php';
 if (isset($_GET['id'])) {
     $id = intval($_GET['id']);
 

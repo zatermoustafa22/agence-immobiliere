@@ -1,14 +1,5 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "immobilier";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-    die("Échec de la connexion : " . $conn->connect_error);
-}
+require_once __DIR__ . '/db.php';
 
 // Get filter inputs
 $type = $_GET['type'] ?? '';

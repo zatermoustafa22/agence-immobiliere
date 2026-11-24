@@ -2,23 +2,11 @@
 session_start();
 
 // Vérifier si l'utilisateur est connecté
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'proprietaire') {
-    header("Location: changer_role.php");
-    exit();
-}
 
-// Connexion à la base de données
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "immobilier";
 
-$conn = new mysqli($servername, $username, $password, $dbname);
+require_once __DIR__ . '/db.php';
 
-// Vérifier la connexion
-if ($conn->connect_error) {
-    die("Échec de la connexion : " . $conn->connect_error);
-}
+
 
 // ID utilisateur connecté
 $user_id = $_SESSION['user_id'];
@@ -629,7 +617,7 @@ Favoris
 <h1>Bienvenue, <?php echo htmlspecialchars($_SESSION['nom_utilisateur']); ?> !</h1>
 
 <div class="container">
-  <a href="ajouter_propriete.php" class="button">Ajouter une nouvelle propriété</a>
+  <a href="changer_role.php" class="button">Ajouter une nouvelle propriété</a>
 </div>
 
 <h2>Mes propriétés</h2>
@@ -691,7 +679,8 @@ if (count($images) > 1) {
         echo "</div>";
     }
 } else {
-    echo "<p>Vous n'avez pas encore publié de propriétés.</p>";
+    echo "<p style='color: white;'>Vous n'avez pas encore publié de propriétés.</p>";
+
 }
 ?>
 

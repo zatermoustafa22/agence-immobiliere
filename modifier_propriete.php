@@ -1,18 +1,7 @@
 <?php
 session_start();
 
-// Connexion à la base de données
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "immobilier";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Vérifier la connexion
-if ($conn->connect_error) {
-    die("Échec de la connexion : " . $conn->connect_error);
-}
+require_once __DIR__ . '/db.php';
 
 // Vérifier si l'utilisateur est connecté et possède un utilisateur_id
 if (!isset($_SESSION['user_id'])) {
@@ -51,18 +40,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $description = htmlspecialchars(trim($_POST['description']), ENT_QUOTES, 'UTF-8');
     $prix = floatval($_POST['prix']);
     $type = htmlspecialchars(trim($_POST['type']), ENT_QUOTES, 'UTF-8');
+    $type_offre = htmlspecialchars(trim($_POST['type_offre']), ENT_QUOTES, 'UTF-8');
     $localisation = htmlspecialchars(trim($_POST['localisation']), ENT_QUOTES, 'UTF-8');
     $contacts = htmlspecialchars(trim($_POST['contacts']), ENT_QUOTES, 'UTF-8');
 
     // Mise à jour de la propriété sans gestion des images
-    $stmt = $conn->prepare("UPDATE propriete SET titre = ?, description = ?, prix = ?, contacts = ?, type = ?, localisation = ?, modifie_a = NOW() WHERE id = ? AND utilisateur_id = ?");
+    $stmt = $conn->prepare("UPDATE propriete SET titre = ?, description = ?, prix = ?, contacts = ?, type = ?, type_offre = ?, localisation = ?, modifie_a = NOW() WHERE id = ? AND utilisateur_id = ?");
     $stmt->bind_param(
-        'sssssssi', // 7 paramètres : 6 chaînes + 1 entier pour id
+        'ssssssssi', // 7 paramètres : 6 chaînes + 1 entier pour id
         $titre,
         $description,
         $prix,
         $contacts,
         $type,
+        $type_offre,
         $localisation,
         $property_id,
         $_SESSION['user_id']
@@ -196,8 +187,21 @@ p {
             <label for="prix">Prix :</label>
             <input type="number" name="prix" id="prix" value="<?= $property['prix'] ?>" required>
 
-            <label for="type">Type :</label>
-            <input type="text" name="type" id="type" value="<?= htmlspecialchars($property['type'], ENT_QUOTES, 'UTF-8') ?>" required>
+            <!-- Type -->
+<label for="type">Type :</label>
+<select name="type" id="type" required>
+    <option value="appartement" <?= $property['type'] === 'appartement' ? 'selected' : '' ?>>Appartement</option>
+    <option value="maison" <?= $property['type'] === 'maison' ? 'selected' : '' ?>>Maison</option>
+    <option value="commercial" <?= $property['type'] === 'commercial' ? 'selected' : '' ?>>Commercial</option>
+    <option value="terrain" <?= $property['type'] === 'terrain' ? 'selected' : '' ?>>Terrain</option>
+</select>
+
+<!-- Type d'offre -->
+<label for="type_offre">Type d'offre :</label>
+<select name="type_offre" id="type_offre" required>
+    <option value="a_louer" <?= $property['type_offre'] === 'a_louer' ? 'selected' : '' ?>>À louer</option>
+    <option value="a_vendre" <?= $property['type_offre'] === 'a_vendre' ? 'selected' : '' ?>>À vendre</option>
+</select>
 
             <label for="localisation">Localisation :</label>
             <input type="text" name="localisation" id="localisation" value="<?= htmlspecialchars($property['localisation'], ENT_QUOTES, 'UTF-8') ?>" required>

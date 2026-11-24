@@ -18,10 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             $mot_de_passe_hash = password_hash($nouveau_mot_de_passe, PASSWORD_DEFAULT);
     
-            $conn = new mysqli("localhost", "root", "", "immobilier");
-            if ($conn->connect_error) {
-                die("Erreur de connexion : " . $conn->connect_error);
-            }
+            require_once __DIR__ . '/db.php';
     
             $stmt = $conn->prepare("UPDATE utilisateurs SET mot_de_passe = ? WHERE email = ?");
             $stmt->bind_param("ss", $mot_de_passe_hash, $email);

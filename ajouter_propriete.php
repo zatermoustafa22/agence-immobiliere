@@ -1,18 +1,7 @@
 <?php
 session_start();
 
-// Connexion à la base de données
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "immobilier";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Vérifier la connexion
-if ($conn->connect_error) {
-    die("Échec de la connexion : " . $conn->connect_error);
-}
+require_once __DIR__ . '/db.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $titre = htmlspecialchars(trim($_POST['titre']), ENT_QUOTES, 'UTF-8');
@@ -27,35 +16,47 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $upload_dir = 'uploads/';
     if (!is_dir($upload_dir)) {
         mkdir($upload_dir, 0777, true);
+        
     }
-
+    
+    
     $image_fields = ['image_01', 'image_02', 'image_03', 'image_04', 'image_05'];
     $image_paths = [];
     $allowed_types = ['image/jpeg', 'image/png', 'image/gif'];
     $errors = [];
 
-    foreach ($image_fields as $field) {
-        if (!empty($_FILES[$field]['name'])) {
-            $file_name = time() . '_' . basename($_FILES[$field]['name']);
-            $file_tmp = $_FILES[$field]['tmp_name'];
-            $file_size = $_FILES[$field]['size'];
-            $file_type = mime_content_type($file_tmp);
-            $file_path = $upload_dir . $file_name;
+foreach ($image_fields as $field) {
+    if (!empty($_FILES[$field]['name'])) {
+        $file_name = time() . '_' . basename($_FILES[$field]['name']);
+        $file_tmp = $_FILES[$field]['tmp_name'];
+        $file_size = $_FILES[$field]['size'];
+        $file_type = mime_content_type($file_tmp);
+        $file_path = $upload_dir . $file_name;
 
-            
-            if (!in_array($file_type, $allowed_types)) {
-                $errors[] = "Format invalide pour $field ! (Seuls JPG, PNG, GIF sont acceptés)";
+        // Vérification du type de fichier
+        if (!in_array($file_type, $allowed_types)) {
+            $errors[] = "Format invalide pour $field ! (Seuls JPG, PNG, GIF sont acceptés)";
+            $image_paths[$field] = '';
+        } else {
+            // Vérification de la taille
+            if ($file_size > 800000) {
+                $errors[] = "L'image $field est trop volumineuse ! (max 800 Ko)";
+                $image_paths[$field] = '';
             } else {
+                // Déplacement du fichier
                 if (move_uploaded_file($file_tmp, $file_path)) {
                     $image_paths[$field] = $file_name;
                 } else {
+                    $errors[] = "Erreur lors de l'upload de $field.";
                     $image_paths[$field] = '';
                 }
             }
-        } else {
-            $image_paths[$field] = '';
         }
+    } else {
+        $image_paths[$field] = '';
     }
+}
+
 
     if (!empty($errors)) {
         $_SESSION['message'] = implode("\n", $errors);

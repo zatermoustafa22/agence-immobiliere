@@ -2,17 +2,7 @@
 session_start();
 
 // Connexion à la base de données
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "immobilier";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Vérifier la connexion
-if ($conn->connect_error) {
-    die("Échec de la connexion : " . $conn->connect_error);
-}
+require_once __DIR__ . '/db.php';
 
 // Récupérer les propriétés depuis la base de données
 $sql = "SELECT * FROM propriete WHERE statut = 'acceptee' ORDER BY cree_a DESC";
@@ -404,6 +394,7 @@ d="M19 7h5v2h-5zm-2 5h7v2h-7zm3 5h4v2h-4zM2 22a8 8 0 1 1 16 0h-2a6 6 0 0 0-12 0z
                     <p><strong>Type :</strong> <?= htmlspecialchars($row['type']) ?></p>
                     <p><strong>Prix :</strong> <?= number_format($row['prix'], 2) ?> €</p>
                     <p><strong>Localisation :</strong> <?= htmlspecialchars($row['localisation']) ?></p>
+                    <p><strong>type d'offre :</strong> <?= htmlspecialchars($row['type_offre']) ?></p>
                     <p><strong>Description :</strong> <?= nl2br(htmlspecialchars($row['description'])) ?></p>
                     
                     <div class="photos-container">
@@ -428,7 +419,7 @@ d="M19 7h5v2h-5zm-2 5h7v2h-7zm3 5h4v2h-4zM2 22a8 8 0 1 1 16 0h-2a6 6 0 0 0-12 0z
                      <!-- Bouton supprimer -->
     <form action="supprimer_propriete.php" method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette propriété ?');">
         <input type="hidden" name="id" value="<?= $row['id'] ?>">
-        <button type="submit" class="button" style="background-color:#d9534f;">Supprimer</button>
+        <button type="submit" class="button">Supprimer</button>
                 </div>
             <?php endwhile; ?>
         <?php else : ?>

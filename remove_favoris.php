@@ -13,10 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $user_id = $_SESSION['user_id'];
     $propriete_id = intval($_POST['propriete_id']);
 
-    $conn = new mysqli("localhost", "root", "", "immobilier");
-    if ($conn->connect_error) {
-        die("Échec de la connexion : " . $conn->connect_error);
-    }
+    require_once __DIR__ . '/db.php';
 
     // Delete the favorite entry for this user and property
     $sql = "DELETE FROM favoris WHERE user_id = ? AND propriete_id = ?";

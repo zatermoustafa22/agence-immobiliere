@@ -1,42 +1,45 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "immobilier";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-    die("Échec de la connexion : " . $conn->connect_error);
-}
+require_once __DIR__ . '/db.php';
 
 // Get filter inputs
 $type = $_GET['type'] ?? '';
 $type_offre = $_GET['type_offre'] ?? '';
 $min_price = $_GET['min_price'] ?? '';
 $max_price = $_GET['max_price'] ?? '';
+$order_favoris = $_GET['order_favoris'] ?? '';
 
-// Build SQL query
-$sql = "SELECT * FROM propriete WHERE statut = 'acceptee'";
+// Start building query
+$sql = "SELECT p.*, COUNT(f.user_id) AS total_favoris 
+        FROM propriete p 
+        LEFT JOIN favoris f ON p.id = f.propriete_id 
+        WHERE p.statut = 'acceptee'";
 
-// Add filters to query
+// Add filters
 if (!empty($type)) {
-    $sql .= " AND type = '" . $conn->real_escape_string($type) . "'";
+    $sql .= " AND p.type = '" . $conn->real_escape_string($type) . "'";
 }
 if (!empty($type_offre)) {
-    $sql .= " AND type_offre = '" . $conn->real_escape_string($type_offre) . "'";
+    $sql .= " AND p.type_offre = '" . $conn->real_escape_string($type_offre) . "'";
 }
 if (!empty($min_price)) {
-    $sql .= " AND prix >= " . (float)$min_price;
+    $sql .= " AND p.prix >= " . (float)$min_price;
 }
 if (!empty($max_price)) {
-    $sql .= " AND prix <= " . (float)$max_price;
+    $sql .= " AND p.prix <= " . (float)$max_price;
 }
 
-$sql .= " ORDER BY cree_a DESC";
+$sql .= " GROUP BY p.id";
+
+// Add ordering
+if ($order_favoris === 'favoris_desc') {
+    $sql .= " ORDER BY total_favoris DESC, p.cree_a DESC";
+} else {
+    $sql .= " ORDER BY p.cree_a DESC";
+}
 
 $result = $conn->query($sql);
 ?>
+
 <head>
     <meta charset="UTF-8">
     <link rel="icon" type="image/png" href="logo2.png">
@@ -636,6 +639,11 @@ Favoris
     <option value="terrain">Terrain</option>
   </select>
 
+    <select name="order_favoris">
+  <option value="">Trier par</option>
+  <option value="favoris_desc">Favoris : Plus → Moins</option>
+</select>
+
   <select name="type_offre">
     <option value="">Type d'offre</option>
     <option value="a_louer">À louer</option>
@@ -693,6 +701,20 @@ Favoris
                         <?php endforeach; ?>
                     </div>
                 </div>
+
+                 <?php $favCount = isset($row['total_favoris']) ? (int)$row['total_favoris'] : 0; ?>
+
+<div style="display: flex; align-items: center; gap: 10px;">
+    <form class="favorisf" method="POST" action="ajouter_favoris.php" style="margin: 0;">
+        <input type="hidden" name="propriete_id" value="<?= $row['id'] ?>">
+        <button class="favoris" type="submit">
+            <!-- Your SVG icon or button text -->
+            ❤️
+        </button>
+    </form>
+    <span><?=$favCount?></span>
+</div>
+
             </div>
         <?php endwhile; ?>
     <?php else : ?>

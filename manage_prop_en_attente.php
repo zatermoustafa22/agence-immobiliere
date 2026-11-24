@@ -2,17 +2,7 @@
 session_start();
 
 // Connexion à la base de données
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "immobilier";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Vérifier la connexion
-if ($conn->connect_error) {
-    die("Échec de la connexion : " . $conn->connect_error);
-}
+require_once __DIR__ . '/db.php';
 
 // Récupérer les propriétés depuis la base de données
 $sql = "SELECT * FROM propriete WHERE statut = 'en_attente' ORDER BY cree_a DESC";

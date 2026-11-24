@@ -8,16 +8,7 @@ require 'PHPMailer/src/Exception.php';
 require 'PHPMailer/src/PHPMailer.php';
 require 'PHPMailer/src/SMTP.php';
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "immobilier";
-
-// Connexion à la base de données
-$conn = new mysqli($servername, $username, $password, $dbname);
-if ($conn->connect_error) {
-    die("Erreur de connexion : " . $conn->connect_error);
-}
+require_once __DIR__ . '/db.php';
 
 if (isset($_POST['email'])) {
     $email = $_POST['email'];
@@ -44,12 +35,12 @@ if (isset($_POST['email'])) {
             $mail->isSMTP();
             $mail->Host = 'smtp.gmail.com';
             $mail->SMTPAuth = true;
-            $mail->Username = 'musmzr0123@gmail.com.com';
-            $mail->Password = 'zhfa slex jpou vffo'; // App Password
+            $mail->Username = 'mimwarimmo@gmail.com';
+            $mail->Password = 'rjqn kyns uncc vscc'; // App Password
             $mail->SMTPSecure = 'tls';
             $mail->Port = 587;
 
-            $mail->setFrom('musmzr0123@gmail.com', 'Confirmation de Mot de Passe');
+            $mail->setFrom('mimwarimmo@gmail.com', 'Confirmation de Mot de Passe');
             $mail->addAddress($email, $nom_utilisateur);
 
             $mail->isHTML(true);

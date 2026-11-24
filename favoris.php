@@ -5,10 +5,7 @@ if (!isset($_SESSION['user_id'])) {
     die("Vous devez être connecté pour voir vos favoris.");
 }
 
-$conn = new mysqli("localhost", "root", "", "immobilier");
-if ($conn->connect_error) {
-    die("Échec de la connexion : " . $conn->connect_error);
-}
+require_once __DIR__ . '/db.php';
 
 $user_id = $_SESSION['user_id'];
 
@@ -360,7 +357,7 @@ h1 {
   </button>
 </div>
 </a>
-<a href="ajouter_propriete.php"><!-- From Uiverse.io by milegelu --> 
+<a href="changer_role.php"><!-- From Uiverse.io by milegelu --> 
 <div>
   <button class="button">
   <svg
@@ -510,7 +507,7 @@ Favoris
                     </div>
             <?php endwhile; ?>
         <?php else : ?>
-            <p>Aucune favoris.</p>
+            <p style='color: white;'>Aucune favoris.</p>
         <?php endif; ?>
     </div>
 

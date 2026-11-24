@@ -2,20 +2,9 @@
 session_start();
 
 // Vérifier si l'utilisateur est connecté
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'proprietaire') {
-    header("Location: changer_role.php");
-    exit();
-}
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "immobilier";
 
-$conn = new mysqli($servername, $username, $password, $dbname);
-if ($conn->connect_error) {
-    die("Erreur de connexion : " . $conn->connect_error);
-}
+require_once __DIR__ . '/db.php';
 
 $user_id = $_SESSION['user_id'];
 
@@ -86,34 +75,143 @@ $utilisateur = $result->fetch_assoc();
 <head>
     <link rel="icon" type="image/png" href="logo2.png">
     <meta charset="UTF-8">
-    <title>Modifier Profil</title>
+    <title>Modifier vos infos personnelles</title>
+      <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f4f6f8;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+
+        .container {
+            background: #ffffff;
+            margin-top: 40px;
+            padding: 30px 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            font-size: 26px;
+            margin-bottom: 30px;
+        }
+
+        label {
+            display: block;
+            margin: 12px 0 6px;
+            color: #444;
+            font-weight: 500;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus,
+        input[type="password"]:focus {
+            border-color: #007BFF;
+            outline: none;
+        }
+
+        input[type="submit"] {
+            margin-top: 20px;
+            width: 100%;
+            padding: 12px;
+            background-color: #4d4db3;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        input[type="submit"]:hover {
+            background-color:rgb(36, 36, 78);
+        }
+
+        .message {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #e53935;
+            font-weight: bold;
+        }
+
+        .success {
+            color: #43a047;
+        }
+
+        h3 {
+            margin-top: 30px;
+            color: #555;
+            font-size: 18px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+        }
+
+        .back-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .back-link a {
+            text-decoration: none;
+            color: #007BFF;
+            font-weight: 500;
+        }
+
+        .back-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+    </style>
 </head>
 <body>
-    <h1>Modifier votre profil</h1>
+    <div class="container">
+        <h1>Modifier votre profil</h1>
 
-    <?php if (!empty($message)) echo "<p>$message</p>"; ?>
+        <?php if (!empty($message)): ?>
+            <div class="message <?= strpos($message, 'succès') !== false ? 'success' : '' ?>">
+                <?= htmlspecialchars($message) ?>
+            </div>
+        <?php endif; ?>
 
-<form method="post">
-    <label>Nom d'utilisateur:</label>
-    <input type="text" name="nom_utilisateur" value="<?= htmlspecialchars($utilisateur['nom_utilisateur']) ?>" required><br><br>
+        <form method="post">
+            <label>Nom d'utilisateur:</label>
+            <input type="text" name="nom_utilisateur" value="<?= htmlspecialchars($utilisateur['nom_utilisateur']) ?>" required>
 
-    
+            <label>Mot de passe actuel :</label>
+            <input type="password" name="mot_de_passe_actuel" required>
 
-    <label>Mot de passe actuel :</label>
-    <input type="password" name="mot_de_passe_actuel" required><br><br>
-    <h3>Changer le mot de passe (facultatif)</h3>
-    <label>Nouveau mot de passe (laisser vide pour ne pas changer) :</label>
-    <input type="password" name="mot_de_passe_nouveau"><br><br>
+            <h3>Changer le mot de passe (facultatif)</h3>
 
-    <label>Confirmer nouveau mot de passe :</label>
-    <input type="password" name="mot_de_passe_nouveau_confirm"><br><br>
+            <label>Nouveau mot de passe :</label>
+            <input type="password" name="mot_de_passe_nouveau">
 
-    <input type="submit" value="Mettre à jour">
-</form>
+            <label>Confirmer nouveau mot de passe :</label>
+            <input type="password" name="mot_de_passe_nouveau_confirm">
 
+            <input type="submit" value="Mettre à jour">
+        </form>
 
-
-
-    <br><a href="profile.php">Retour au profil</a>
+        <div class="back-link">
+            <a href="profile.php">← Retour au profil</a>
+        </div>
+    </div>
 </body>
 </html>

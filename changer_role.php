@@ -1,16 +1,7 @@
 <?php
 session_start();
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "immobilier";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-    die("Échec de la connexion : " . $conn->connect_error);
-}
+require_once __DIR__ . '/db.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['changer_role']) && isset($_SESSION['user_id'])) {
     $id = intval($_SESSION['user_id']);  // Use session to identify user
@@ -34,6 +25,7 @@ $conn->close();
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+    <link rel="icon" type="image/png" href="logo2.png">
     <meta charset="UTF-8">
     <title>Changer de rôle</title>
 </head>

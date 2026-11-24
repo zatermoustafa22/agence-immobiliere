@@ -7,15 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($code_saisi == $_SESSION['confirmation_code']) {
         // Code matches, create the account
-        $servername = "localhost";
-        $username = "root";
-        $password = "";
-        $dbname = "immobilier";
-        $conn = new mysqli($servername, $username, $password, $dbname);
-
-        if ($conn->connect_error) {
-            die("Erreur de connexion : " . $conn->connect_error);
-        }
+        require_once __DIR__ . '/db.php';
 
         $nom_utilisateur = $_SESSION['nom_utilisateur'];
         $email = $_SESSION['email'];
@@ -28,6 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($stmt->execute()) {
             echo "Compte créé avec succès ! Vous pouvez maintenant vous connecter.";
+        echo '<a href="connexion.html"><button>Connexion</button></a>';
         } else {
             echo "Erreur lors de la création du compte.";
         }

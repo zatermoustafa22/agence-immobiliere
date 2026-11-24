@@ -6,18 +6,9 @@ require 'PHPMailer/src/Exception.php';
 require 'PHPMailer/src/PHPMailer.php';
 require 'PHPMailer/src/SMTP.php';
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "immobilier";
+require_once __DIR__ . '/db.php';
 
-// Create a connection using mysqli
-$conn = new mysqli($servername, $username, $password, $dbname);
 
-// Check if the connection is successful
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $name = htmlspecialchars($_POST['name']);
     $email = htmlspecialchars($_POST['email']);
@@ -29,13 +20,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $mail->isSMTP();
         $mail->Host = 'smtp.gmail.com';
         $mail->SMTPAuth = true;
-        $mail->Username = 'mus2alive@gmail.com'; // Replace with your email
-        $mail->Password = 'jkbz lfrp ghai vhho'; // Replace with your app password
+        $mail->Username = 'mimwarimmo@gmail.com'; // Replace with your email
+        $mail->Password = 'rjqn kyns uncc vscc'; // Replace with your app password
         $mail->SMTPSecure = 'tls';
         $mail->Port = 587;
 
         $mail->setFrom($email, $name);
-        $mail->addAddress('mus2alive@gmail.com', 'Agence Immobilière'); // Your email address
+        $mail->addAddress('mimwarimmo@gmail.com', 'Agence Immobilière'); // Your email address
 
         $mail->Subject = "Nouveau message de $name";
         $mail->isHTML(true);

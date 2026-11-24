@@ -258,10 +258,7 @@ nav .searchBox {
     <div class="property-examples">
     <?php
     // Connexion à la base de données
-    $conn = new mysqli("localhost", "root", "", "immobilier");
-    if ($conn->connect_error) {
-        die("Connexion échouée : " . $conn->connect_error);
-    }
+    require_once __DIR__ . '/db.php';
 
     $sql = "SELECT titre, prix, image_01, description FROM propriete ORDER BY cree_a DESC LIMIT 3";
     $result = $conn->query($sql);

@@ -3,15 +3,11 @@ session_start();
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "immobilier";
+$dbname = "immob";
 
-// Create a connection using mysqli
-$conn = new mysqli($servername, $username, $password, $dbname);
+require_once __DIR__ . '/db.php';
 
-// Check if the connection is successful
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+
 
 // Check if form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

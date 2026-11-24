@@ -7,11 +7,7 @@ if (!isset($_SESSION['nom_utilisateur'])) {
     exit;
 }
 
-$conn = mysqli_connect("localhost", "root", "", "immobilier");
-
-if (!$conn) {
-    die("Connection failed: " . mysqli_connect_error());
-}
+require_once __DIR__ . '/db.php';
 
 $username = mysqli_real_escape_string($conn, $_SESSION['nom_utilisateur']);
 

@@ -9,7 +9,7 @@ require 'PHPMailer/src/SMTP.php';
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "immobilier";
+$dbname = "immob";
 
 // Create a connection using mysqli
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -29,18 +29,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $mail->isSMTP();
         $mail->Host = 'smtp.gmail.com';
         $mail->SMTPAuth = true;
-        $mail->Username = 'musmzr0123@gmail.com'; // Replace with your email
-        $mail->Password = 'zhfa slex jpou vffo'; // Replace with your app password
+        $mail->Username = 'mimwarimmo@gmail.com'; // Replace with your email
+        $mail->Password = 'rjqn kyns uncc vscc'; // Replace with your app password
         $mail->SMTPSecure = 'tls';
         $mail->Port = 587;
 
         $mail->setFrom($email, $name);
-        $mail->addAddress('musmzr0123@gmail.com', 'demande admin access'); // Your email address
+        $mail->addAddress('mimwarimmo@gmail.com', 'demande admin access'); // Your email address
 
         $mail->Subject = "Nouveau message de $name";
         $mail->isHTML(true);
         $mail->Body = "
-            <h3>Nouveau message de contact</h3>
+            <h3>Demande Admin</h3>
             <p><strong>Nom d'utilisateur :</strong> $name</p>
             <p><strong>Email :</strong> $email</p>
             <p><strong>Message :</strong><br>$message</p>

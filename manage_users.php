@@ -1,16 +1,7 @@
 <?php
 session_start(); // Needed for session variables
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "immobilier"; 
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+require_once __DIR__ . '/db.php';
 
 // Add user functionality
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_user'])) {
